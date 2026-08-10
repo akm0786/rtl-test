@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04  # Ubuntu 22.04 use karo (stable)
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout repository
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.11.0  # LTS version lock karo
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
