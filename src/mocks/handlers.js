@@ -2,6 +2,8 @@ import { http, HttpResponse } from 'msw';
 
 // Tumhare API ka base URL
 const API_URL = 'https://api.freeapi.app/api/v1/public/randomusers';
+const TODO_API = 'https://api.freeapi.app/api/v1/todos';
+
 
 export const handlers = [
   // GET /randomusers - Success case
@@ -37,6 +39,42 @@ export const handlers = [
           }
         ]
       }
+    });
+  }),
+
+// ---- Todo handlers ----
+  http.get(TODO_API, () => {
+    return HttpResponse.json({
+      data: [
+        { _id: '1', title: 'Learn testing', isComplete: false },
+        { _id: '2', title: 'Write integration tests', isComplete: true },
+      ],
+    });
+  }),
+
+  http.post(TODO_API, async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json(
+      { data: { _id: '3', ...body } },
+      { status: 201 }
+    );
+  }),
+
+  http.delete(`${TODO_API}/:id`, ({ params }) => {
+    return HttpResponse.json({ data: { _id: params.id } });
+  }),
+
+  http.patch(`${TODO_API}/:id`, async ({ params, request }) => {
+    const body = await request.json();
+    return HttpResponse.json({
+      data: { _id: params.id, ...body },
+    });
+  }),
+
+  http.patch(`${TODO_API}/toggle/status/:id`, ({ params }) => {
+    // Simple toggle logic for test
+    return HttpResponse.json({
+      data: { _id: params.id, isComplete: true },
     });
   }),
 ];
