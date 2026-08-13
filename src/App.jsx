@@ -7,7 +7,7 @@ function App() {
   return  (
     <Provider store={store}>
       <h1> React components API Practice</h1>
-      {/* <UsersList/> */}
+      <UsersList/>
       <TodoList />
 
 
