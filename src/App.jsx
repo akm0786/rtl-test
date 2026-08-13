@@ -1,18 +1,16 @@
-import { Provider } from "react-redux";
-import {store} from './store'
-import UsersList from "./components/UserList";
-import TodoList from "./components/TodoList";
+import { Provider } from 'react-redux';
+import { store } from './store';
+import UsersList from './components/UserList';
+import TodoList from './components/TodoList';
 
 function App() {
-  return  (
+  return (
     <Provider store={store}>
       <h1> React components API Practice</h1>
-      <UsersList/>
+      <UsersList />
       <TodoList />
-
-
     </Provider>
-  )
+  );
 }
 
-export default App
+export default App;

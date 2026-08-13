@@ -35,4 +35,4 @@ describe('usersSlice', () => {
     expect(state.status).toBe('failed');
     expect(state.error).toBe('Network Error');
   });
-}); 
+});

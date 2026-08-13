@@ -43,14 +43,18 @@ const UsersList = () => {
       <div className="users-grid">
         {users.map((user) => (
           <div key={user.login?.uuid || user.email} className="user-card">
-            <img 
-              src={user.picture?.medium} 
+            <img
+              src={user.picture?.medium}
               alt={`${user.name?.first} ${user.name?.last}`}
             />
-            <h3>{user.name?.title} {user.name?.first} {user.name?.last}</h3>
+            <h3>
+              {user.name?.title} {user.name?.first} {user.name?.last}
+            </h3>
             <p>📧 {user.email}</p>
             <p>📱 {user.phone}</p>
-            <p>📍 {user.location?.city}, {user.location?.country}</p>
+            <p>
+              📍 {user.location?.city}, {user.location?.country}
+            </p>
           </div>
         ))}
       </div>

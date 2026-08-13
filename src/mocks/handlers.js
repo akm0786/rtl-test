@@ -4,7 +4,6 @@ import { http, HttpResponse } from 'msw';
 const API_URL = 'https://api.freeapi.app/api/v1/public/randomusers';
 const TODO_API = 'https://api.freeapi.app/api/v1/todos';
 
-
 export const handlers = [
   // GET /randomusers - Success case
   http.get(API_URL, () => {
@@ -15,34 +14,34 @@ export const handlers = [
             name: { title: 'Mr', first: 'Rahul', last: 'Verma' },
             email: 'rahul@example.com',
             phone: '9999999999',
-            picture: { 
-              medium: 'https://randomuser.me/api/portraits/men/1.jpg' 
+            picture: {
+              medium: 'https://randomuser.me/api/portraits/men/1.jpg',
             },
-            location: { 
-              city: 'Bangalore', 
-              country: 'India' 
+            location: {
+              city: 'Bangalore',
+              country: 'India',
             },
-            login: { uuid: 'rahul-123' }
+            login: { uuid: 'rahul-123' },
           },
           {
             name: { title: 'Ms', first: 'Neha', last: 'Patel' },
             email: 'neha@example.com',
             phone: '8888888888',
-            picture: { 
-              medium: 'https://randomuser.me/api/portraits/women/2.jpg' 
+            picture: {
+              medium: 'https://randomuser.me/api/portraits/women/2.jpg',
             },
-            location: { 
-              city: 'Mumbai', 
-              country: 'India' 
+            location: {
+              city: 'Mumbai',
+              country: 'India',
             },
-            login: { uuid: 'neha-456' }
-          }
-        ]
-      }
+            login: { uuid: 'neha-456' },
+          },
+        ],
+      },
     });
   }),
 
-// ---- Todo handlers ----
+  // ---- Todo handlers ----
   http.get(TODO_API, () => {
     return HttpResponse.json({
       data: [
@@ -54,10 +53,7 @@ export const handlers = [
 
   http.post(TODO_API, async ({ request }) => {
     const body = await request.json();
-    return HttpResponse.json(
-      { data: { _id: '3', ...body } },
-      { status: 201 }
-    );
+    return HttpResponse.json({ data: { _id: '3', ...body } }, { status: 201 });
   }),
 
   http.delete(`${TODO_API}/:id`, ({ params }) => {

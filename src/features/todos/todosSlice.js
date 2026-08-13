@@ -8,7 +8,8 @@ export const fetchTodos = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(BASE_URL);
-      if (!response.ok) return rejectWithValue(`Server error: ${response.status}`);
+      if (!response.ok)
+        return rejectWithValue(`Server error: ${response.status}`);
       const data = await response.json();
       return data; // assuming structure { data: [...] }
     } catch (err) {
@@ -27,7 +28,8 @@ export const addTodo = createAsyncThunk(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(todoData),
       });
-      if (!response.ok) return rejectWithValue(`Server error: ${response.status}`);
+      if (!response.ok)
+        return rejectWithValue(`Server error: ${response.status}`);
       const data = await response.json();
       return data; // new todo object
     } catch (err) {
@@ -46,7 +48,8 @@ export const updateTodo = createAsyncThunk(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates),
       });
-      if (!response.ok) return rejectWithValue(`Server error: ${response.status}`);
+      if (!response.ok)
+        return rejectWithValue(`Server error: ${response.status}`);
       const data = await response.json();
       return data; // updated todo
     } catch (err) {
@@ -61,7 +64,8 @@ export const deleteTodo = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE' });
-      if (!response.ok) return rejectWithValue(`Server error: ${response.status}`);
+      if (!response.ok)
+        return rejectWithValue(`Server error: ${response.status}`);
       return id; // return id to remove from list
     } catch (err) {
       return rejectWithValue(err.message);
@@ -74,8 +78,11 @@ export const toggleTodoStatus = createAsyncThunk(
   'todos/toggleTodoStatus',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/toggle/status/${id}`, { method: 'PATCH' });
-      if (!response.ok) return rejectWithValue(`Server error: ${response.status}`);
+      const response = await fetch(`${BASE_URL}/toggle/status/${id}`, {
+        method: 'PATCH',
+      });
+      if (!response.ok)
+        return rejectWithValue(`Server error: ${response.status}`);
       const data = await response.json();
       return data; // updated todo with new status
     } catch (err) {

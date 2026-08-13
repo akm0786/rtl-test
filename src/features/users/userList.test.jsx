@@ -7,8 +7,7 @@ import usersReducer from '../users/usersSlice';
 import UsersList from '../../components/UserList';
 import { server } from '../../mocks/server';
 
-const createStore = () =>
-  configureStore({ reducer: { users: usersReducer } });
+const createStore = () => configureStore({ reducer: { users: usersReducer } });
 
 const renderWithStore = (store = createStore()) =>
   render(
@@ -44,7 +43,9 @@ describe('UsersList Integration', () => {
 
     // Specifically wait for the error heading or the exact error message
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /error/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /error/i })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText(/Server error: 500/)).toBeInTheDocument();

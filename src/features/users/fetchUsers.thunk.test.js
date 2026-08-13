@@ -26,15 +26,9 @@ describe('fetchUsers thunk', () => {
   test('failed API call dispatches rejected', async () => {
     // Override handler for error case
     server.use(
-      http.get(
-        'https://api.freeapi.app/api/v1/public/randomusers',
-        () => {
-          return HttpResponse.json(
-            { message: 'Server error' },
-            { status: 500 }
-          );
-        }
-      )
+      http.get('https://api.freeapi.app/api/v1/public/randomusers', () => {
+        return HttpResponse.json({ message: 'Server error' }, { status: 500 });
+      })
     );
 
     const store = createTestStore();
@@ -48,48 +42,45 @@ describe('fetchUsers thunk', () => {
 
   test('dispatches pending then fulfilled states', async () => {
     const store = createTestStore();
-    
+
     // Dispatch karo
     const dispatchPromise = store.dispatch(fetchUsers());
-    
+
     // Immediately pending state check karo
     const pendingState = store.getState().users;
     expect(pendingState.status).toBe('pending');
-    
+
     // Wait for completion
     await dispatchPromise;
-    
+
     // Final state check
     const finalState = store.getState().users;
     expect(finalState.status).toBe('succeeded');
     expect(finalState.users).toHaveLength(2);
   });
 
-test('failed API call dispatches rejected', async () => {
-  // HTTP error response ke liye - structure with data field
-  server.use(
-    http.get(
-      'https://api.freeapi.app/api/v1/public/randomusers',
-      () => {
+  test('failed API call dispatches rejected', async () => {
+    // HTTP error response ke liye - structure with data field
+    server.use(
+      http.get('https://api.freeapi.app/api/v1/public/randomusers', () => {
         // Option 1: Return proper error structure
         return HttpResponse.json(
-          { 
+          {
             success: false,
             message: 'Server error',
-            data: null  // Ya data empty object
-          }, 
+            data: null, // Ya data empty object
+          },
           { status: 500 }
         );
-      }
-    )
-  );
+      })
+    );
 
-  const store = createTestStore();
-  await store.dispatch(fetchUsers());
+    const store = createTestStore();
+    await store.dispatch(fetchUsers());
 
-  const state = store.getState().users;
-  expect(state.status).toBe('failed');
-  expect(state.error).toBeDefined();
-  expect(state.users).toEqual([]);
-});
+    const state = store.getState().users;
+    expect(state.status).toBe('failed');
+    expect(state.error).toBeDefined();
+    expect(state.users).toEqual([]);
+  });
 });
