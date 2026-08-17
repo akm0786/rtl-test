@@ -1,20 +1,22 @@
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
-import gzipSize from 'gzip-size';
+import { gzipSize } from 'gzip-size';
 
 const distDir = 'dist';
 const maxTotalKb = 500;
 
-const files = await readdir(distDir);
-const jsCssFiles = files.filter((f) => f.endsWith('.js') || f.endsWith('.css'));
+// Recursively read all files inside dist
+const files = await readdir(distDir, { recursive: true });
+const jsCssFiles = files
+  .filter((f) => f.endsWith('.js') || f.endsWith('.css'))
+  .map((f) => join(distDir, f));
 
 let totalGzip = 0;
-for (const file of jsCssFiles) {
-  const filePath = join(distDir, file);
+for (const filePath of jsCssFiles) {
   const fileContent = await readFile(filePath);
   const gzip = await gzipSize(fileContent);
   totalGzip += gzip;
-  console.log(`${file}: ${(gzip / 1024).toFixed(2)} KB (gzip)`);
+  console.log(`${filePath}: ${(gzip / 1024).toFixed(2)} KB (gzip)`);
 }
 
 console.log(`Total gzip size: ${(totalGzip / 1024).toFixed(2)} KB`);
