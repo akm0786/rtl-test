@@ -34,3 +34,6 @@ jobs:
 
       - name: Run tests
         run: npx vitest run
+
+      - name: Check bundle size
+        run: npm run size-check

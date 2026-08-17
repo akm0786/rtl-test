@@ -38,6 +38,13 @@ export default [
       ],
     },
   },
+  // Node scripts (build scripts, etc.)
+  {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 
   // Test files and setup
   {
