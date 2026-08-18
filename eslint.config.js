@@ -40,7 +40,7 @@ export default [
   },
   // Node scripts (build scripts, etc.)
   {
-    files: ['scripts/**/*.js'],
+    files: ['scripts/**/*.js', 'playwright.config.js', 'e2e/**/*.js'],
     languageOptions: {
       globals: globals.node,
     },
