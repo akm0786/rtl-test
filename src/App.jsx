@@ -6,7 +6,7 @@ import TodoList from './components/TodoList';
 function App() {
   return (
     <Provider store={store}>
-      <h1> React components API Practice</h1>
+      <h1> React components API Practice test</h1>
       <UsersList />
       <TodoList />
     </Provider>
